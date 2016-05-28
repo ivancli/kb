@@ -1,0 +1,19 @@
+.sa-top-login {
+    background-image: url(../img/icon/login.png);
+}
+
+.neat-nav-icon {
+    font-size: 25px;
+    float: left;
+    padding: 12px 5px;
+}
+
+.neat-nav-search {
+    font-size: 25px;
+    padding: 4px 5px;
+}
+
+.main-search {
+    background-image: none;
+    padding-left: 0;
+}
