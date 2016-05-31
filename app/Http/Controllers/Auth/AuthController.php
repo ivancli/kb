@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -29,6 +31,9 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $loginPath = 'login';
+    protected $username = 'email';
+    protected $redirectAfterLogout = '/';
 
     /**
      * Create a new authentication controller instance.
@@ -63,10 +68,19 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $confirmationCode = str_random(30);
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code' => $confirmationCode,
         ]);
+
+        Mail::send('email.verify', array("confirmation_code"=>$confirmationCode), function($message){
+            $message->to(Input::get('email'), Input::get('name'))
+                ->subject('Welcome to ICL Knowledge Base');
+        });
+        $this->redirectTo = 'register/success';
+        return $user;
     }
 }

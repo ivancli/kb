@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('status', ['inactive', 'active', 'locked', 'deleted'])->default('inactive');
+            $table->string("confirmation_code", 30)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

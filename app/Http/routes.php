@@ -12,4 +12,5 @@
 */
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'RoutingController@home');
+    Route::get('login', 'RoutingController@login');
 });

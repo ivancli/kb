@@ -36,7 +36,7 @@
         <div class="media-body">
             <div class="media" id="top-menu">
                 <div class="pull-left tm-icon">
-                    <a data-drawer="login" class="drawer-toggle" href="#">
+                    <a href="{{url('login')}}">
                         {{--<i class="sa-top-login"></i>--}}
                         <i class="fa fa-key neat-nav-icon"></i>
                         <span>Login</span>
