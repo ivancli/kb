@@ -20,4 +20,9 @@ class RoutingController extends Controller
     {
         return view('login');
     }
+
+    function registerSuccess()
+    {
+        return view('login');
+    }
 }

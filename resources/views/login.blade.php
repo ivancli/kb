@@ -25,24 +25,25 @@
 <body id="skin-cloth">
     <section id="login">
         <header>
-            <h1>ICL Knowledge Base</h1>
+            <h1><a href="{{url('/')}}">ICL Knowledge Base</a></h1>
             <p class="login-paragraph">Welcome to ICL Knowledge Base. For better browsing experience, please login to discover more features of this site.</p>
         </header>
 
         <div class="clearfix"></div>
 
         <!-- Login -->
-        <form class="box tile animated active" id="box-login">
+        <form class="box tile animated active" id="box-login" action="{{url('login')}}" method="post">
+            {!! csrf_field() !!}
             <h2 class="m-t-0 m-b-15">Login</h2>
-            <input type="text" class="login-control m-b-10" placeholder="Email Address">
-            <input type="password" class="login-control" placeholder="Password">
+            <input type="text" name="email" class="login-control m-b-10" placeholder="Email Address">
+            <input type="password" name="password" class="login-control" placeholder="Password">
             <div class="checkbox m-b-20">
                 <label>
                     <input type="checkbox">
                     Remember Me
                 </label>
             </div>
-            <button class="btn btn-sm m-r-5">Sign In</button>
+            <button class="btn btn-sm m-r-5" type="submit">Sign In</button>
 
             <small>
                 <a class="box-switcher" data-switch="box-register" href="#">Don't have an Account?</a> or
@@ -51,15 +52,15 @@
         </form>
 
         <!-- Register -->
-        <form class="box animated tile" id="box-register">
+        <form class="box animated tile" id="box-register" action="{{url('register')}}" method="post">
+            {!! csrf_field() !!}
             <h2 class="m-t-0 m-b-15">Register</h2>
-            <input type="text" class="login-control m-b-10" placeholder="Full Name">
-            <input type="text" class="login-control m-b-10" placeholder="Username">
-            <input type="email" class="login-control m-b-10" placeholder="Email Address">
-            <input type="password" class="login-control m-b-10" placeholder="Password">
-            <input type="password" class="login-control m-b-20" placeholder="Confirm Password">
+            <input type="text" name="name" class="login-control m-b-10" placeholder="Full Name">
+            <input type="email" name="email" class="login-control m-b-10" placeholder="Email Address">
+            <input type="password" name="password" class="login-control m-b-10" placeholder="Password">
+            <input type="password" name="password_confirmation" class="login-control m-b-20" placeholder="Confirm Password">
 
-            <button class="btn btn-sm m-r-5">Register</button>
+            <button class="btn btn-sm m-r-5" type="submit">Register</button>
 
             <small><a class="box-switcher" data-switch="box-login" href="#">Already have an Account?</a></small>
         </form>

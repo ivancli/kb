@@ -76,7 +76,7 @@ class AuthController extends Controller
             'confirmation_code' => $confirmationCode,
         ]);
 
-        Mail::send('email.verify', array("confirmation_code"=>$confirmationCode), function($message){
+        Mail::send('emails.auth.verify', array("confirmation_code"=>$confirmationCode), function($message){
             $message->to(Input::get('email'), Input::get('name'))
                 ->subject('Welcome to ICL Knowledge Base');
         });

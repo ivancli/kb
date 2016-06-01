@@ -13,4 +13,10 @@
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'RoutingController@home');
     Route::get('login', 'RoutingController@login');
+    Route::post('login', 'Auth\AuthController@postLogin');
+    Route::post('register', 'Auth\AuthController@postRegister');
+    Route::group(['prefix' => 'register'], function(){
+        Route::get('/', 'RoutingController@registerSuccess');
+        Route::get('verify/{confirmation_code}', 'Auth\AuthController@verify');
+    });
 });
