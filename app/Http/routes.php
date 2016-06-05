@@ -23,4 +23,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('reset/{encrypted_email}/{confirmation_code}', 'Auth\ForgotController@viewReset');
     Route::post('reset', 'Auth\ForgotController@postReset');
     Route::get('logout', 'Auth\AuthController@logout');
+
+    /*QBE CHAMS*/
+    Route::group([
+        'prefix' => 'chams',
+        'middleware' => ['auth', 'role:chams_admin|chams_asset_distributor|chams_asset_manager|chams_client|chams_reporter|chams_staff']
+    ], function () {
+        Route::get('/', ['uses' => 'CHAMS\RoutingController@home']);
+        Route::get('users', ['uses' => 'CHAMS\RoutingController@users']);
+    });
 });

@@ -4,7 +4,6 @@
 <!--[if !IE]> -->
 <html>
 <!-- <![endif]-->
-<!-- Mirrored from byrushan.com/projects/sa/1-0-3/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 May 2016 10:40:33 GMT -->
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="format-detection" content="telephone=no">
@@ -124,10 +123,19 @@
 
             <!-- Side Menu -->
             <ul class="list-unstyled side-menu">
-                <li class="active">
+                <li class="{!! classActivePath('/') !!}">
                     <a class="sa-side-home" href="{{url('/')}}">
                         <span class="menu-item">Home</span>
                     </a>
+                </li>
+                <li class="dropdown {!! classActivePath('chams') !!}">
+                    <a class="sa-side-form" href="#">
+                        <span class="menu-item">QBE CHAMS</span>
+                    </a>
+                    <ul class="list-unstyled menu-item">
+                        <li><a href="{{url('chams')}}">Home</a></li>
+                        <li><a href="{{url('chams/users')}}">Users</a></li>
+                    </ul>
                 </li>
             </ul>
 
@@ -387,5 +395,4 @@
     @yield('script')
 </body>
 
-<!-- Mirrored from byrushan.com/projects/sa/1-0-3/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 May 2016 10:40:52 GMT -->
 </html>

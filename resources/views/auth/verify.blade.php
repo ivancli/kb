@@ -4,7 +4,6 @@
 <!--[if !IE]> -->
 <html>
 <!-- <![endif]-->
-<!-- Mirrored from byrushan.com/projects/sa/1-0-3/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 May 2016 10:42:25 GMT -->
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <meta name="format-detection" content="telephone=no">
@@ -58,6 +57,4 @@
         }, 5000);
     </script>
 </body>
-
-<!-- Mirrored from byrushan.com/projects/sa/1-0-3/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 May 2016 10:42:26 GMT -->
 </html>

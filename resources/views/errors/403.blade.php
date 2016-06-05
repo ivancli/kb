@@ -11,7 +11,7 @@
     <meta name="description" content="Ivan's Knowledge base">
     <meta name="keywords" content="Ivan, Cheng, Li, Knowledge, Base">
 
-    <title>ICL KB - Be Right Back</title>
+    <title>ICL KB - Unauthorised Access</title>
 
     <!-- CSS -->
     <link href="{{asset('assets/external/sa/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -20,8 +20,9 @@
 </head>
 <body id="skin-cloth">
     <section id="error-page" class="tile">
-        <h1 class="m-b-10">Be Right Back</h1>
-        <p>Our website is undergoing maintenance. It be back soon.</p>
+        <h1 class="m-b-10">ERROR 403</h1>
+        <p>You are not authorised to access this page.</p>
+        <a class="underline" href="{{url('/')}}">Go to Home page</a>
     </section>
 
 </body>

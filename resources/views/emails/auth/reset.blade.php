@@ -6,7 +6,7 @@
  * Time: 11:48 PM
  */
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US">
 <head>
     <meta charset="utf-8">

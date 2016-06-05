@@ -2,18 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: Ivan
- * Date: 22/05/2016
- * Time: 7:59 PM
+ * Date: 5/06/2016
+ * Time: 10:35 PM
  */
 ?>
 @extends('layouts.neat')
 @section('title')
-    ICL KB - Home
+    ICL KB - CHAMS
 @stop
 @section('content')
-
-    {!! Auth::user()->roles !!}
-
-    Test page
-
+    CHAMS users page
 @stop
