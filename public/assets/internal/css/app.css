@@ -21,3 +21,11 @@
 .login-paragraph {
     margin-top: 10px;
 }
+
+.error-msgs {
+    display: none;
+}
+
+.error-msgs li {
+    color: #FFABAB;
+}

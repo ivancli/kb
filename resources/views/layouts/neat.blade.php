@@ -35,13 +35,23 @@
 
         <div class="media-body">
             <div class="media" id="top-menu">
-                <div class="pull-left tm-icon">
-                    <a href="{{url('login')}}">
-                        {{--<i class="sa-top-login"></i>--}}
-                        <i class="fa fa-key neat-nav-icon"></i>
-                        <span>Login</span>
-                    </a>
-                </div>
+                @if(!Auth::check())
+                    <div class="pull-left tm-icon">
+                        <a href="{{url('login')}}">
+                            {{--<i class="sa-top-login"></i>--}}
+                            <i class="fa fa-key neat-nav-icon"></i>
+                            <span>Login</span>
+                        </a>
+                    </div>
+                @else
+                    <div class="pull-left tm-icon">
+                        <a href="{{url('logout')}}">
+                            {{--<i class="sa-top-login"></i>--}}
+                            <i class="fa fa-power-off neat-nav-icon"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                @endif
                 <div class="pull-left tm-icon">
                     <a data-drawer="messages" class="drawer-toggle" href="#">
                         <i class="fa fa-envelope-o neat-nav-icon"></i>
@@ -87,7 +97,7 @@
                 <!-- Profile Menu -->
                 <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                     <a href="#" data-toggle="dropdown">
-                        <img class="profile-pic animated" src="img/profile-pic.jpg" alt="">
+                        <img class="profile-pic animated" src="{{asset('assets/internal/img/blue-user-icon.png')}}" alt="">
                     </a>
                     <ul class="dropdown-menu profile-menu">
                         <li><a href="#">My Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
@@ -95,8 +105,8 @@
                         <li><a href="#">Settings</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                         <li><a href="#">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                     </ul>
-                    <h4 class="m-0">Malinda Hollaway</h4>
-                    @malinda-h
+                    <h4 class="m-0">{{Auth::user()->name}}</h4>
+                    {{Auth::user()->email}}
                 </div>
                 @endif
 

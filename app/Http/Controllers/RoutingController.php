@@ -18,11 +18,6 @@ class RoutingController extends Controller
 
     function login()
     {
-        return view('login');
-    }
-
-    function registerSuccess()
-    {
-        return view('login');
+        return view('auth/login');
     }
 }

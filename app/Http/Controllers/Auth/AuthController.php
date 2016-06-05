@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -48,7 +51,7 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -63,7 +66,7 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -76,11 +79,104 @@ class AuthController extends Controller
             'confirmation_code' => $confirmationCode,
         ]);
 
-        Mail::send('emails.auth.verify', array("confirmation_code"=>$confirmationCode), function($message){
+        Mail::send('emails.auth.verify', array("confirmation_code" => $confirmationCode), function ($message) {
             $message->to(Input::get('email'), Input::get('name'))
                 ->subject('Welcome to ICL Knowledge Base');
         });
-        $this->redirectTo = 'register/success';
         return $user;
+    }
+
+    /**
+     * Override the function in RegistersUsers.php
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
+     * @throws \Illuminate\Foundation\Validation\ValidationException
+     */
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+
+        $output = new \stdClass();
+        $output->redirecPath = url($this->redirectPath());
+        $output->status = true;
+        $output->responseText = "Thank you for your registration. A confirmation email has been sent to your mailbox. Please follow the instruction to activate your account. Enjoy browsing ICL Knowledge Base.";
+
+        if ($request->ajax()) {
+            return json_encode($output);
+        } else {
+            return redirect($this->redirectPath());
+        }
+    }
+
+    /**
+     * Override the function in AuthenticatesUsers.php
+     *
+     * @param Request $request
+     * @param $throttles
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function handleUserWasAuthenticated(Request $request, $throttles)
+    {
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated')) {
+            return $this->authenticated($request, Auth::guard($this->getGuard())->user());
+        }
+
+        if ($request->ajax()) {
+            $output = new \stdClass();
+            $output->redirectPath = url(Session::pull('url.intended', $this->redirectPath()));
+            $output->status = true;
+            $output->responseText = "You have already logged in.";
+            return json_encode($output);
+        } else {
+            return redirect()->intended($this->redirectPath());
+        }
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if ($request->ajax()) {
+            $output = new \stdClass();
+            $output->redirectPath = url(Session::pull('url.intended', $this->redirectPath()));
+            $output->status = true;
+            $output->responseText = "You have already logged in.";
+            return json_encode($output);
+        } else {
+            return redirect()->intended($this->redirectPath());
+        }
+    }
+
+    /**
+     * Override the function in AuthenticatesUsers.php
+     *
+     * @param Request $request
+     * @return $this
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        if ($request->json()) {
+            $output = new \stdClass();
+            $output->status = false;
+            $output->responseJSON = array($this->loginUsername() => $this->getFailedLoginMessage());
+            return json_encode($output);
+        } else {
+            return redirect()->back()
+                ->withInput($request->only($this->loginUsername(), 'remember'))
+                ->withErrors([
+                    $this->loginUsername() => $this->getFailedLoginMessage(),
+                ]);
+        }
     }
 }

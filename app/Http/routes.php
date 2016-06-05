@@ -12,11 +12,15 @@
 */
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'RoutingController@home');
-    Route::get('login', 'RoutingController@login');
+    Route::group(['prefix' => 'login'], function () {
+        Route::get('/', ['middleware' => ['guest'], 'uses' => 'RoutingController@login']);
+        Route::get('verify/{confirmation_code}', ['middleware' => ['auth'], 'uses' => 'Auth\VerifyController@verify']);
+    });
     Route::post('login', 'Auth\AuthController@postLogin');
     Route::post('register', 'Auth\AuthController@postRegister');
-    Route::group(['prefix' => 'register'], function(){
-        Route::get('/', 'RoutingController@registerSuccess');
-        Route::get('verify/{confirmation_code}', 'Auth\AuthController@verify');
-    });
+    Route::get('forgot', 'Auth\ForgotController@viewForgot');
+    Route::post('forgot', 'Auth\ForgotController@postForgot');
+    Route::get('reset/{encrypted_email}/{confirmation_code}', 'Auth\ForgotController@viewReset');
+    Route::post('reset', 'Auth\ForgotController@postReset');
+    Route::get('logout', 'Auth\AuthController@logout');
 });

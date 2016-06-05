@@ -16,7 +16,7 @@
 
     <div>
         Thanks for joining us. Please follow the link below to verify your email address
-        <a href="{{ url('register/verify/' . $confirmation_code) }}" target="_blank">{{ url('register/verify/' . $confirmation_code) }}</a>.<br/>
+        <a href="{{ url('login/verify/' . $confirmation_code) }}" target="_blank">{{ url('login/verify/' . $confirmation_code) }}</a>.<br/>
     </div>
 </body>
 </html>
