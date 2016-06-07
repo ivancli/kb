@@ -392,6 +392,7 @@
     <!-- All JS functions -->
     <script src="{{asset('assets/external/sa/js/functions.js')}}"></script>
 
+    <script src="{{asset('assets/internal/js/commonFunctions.js')}}"></script>
     @yield('script')
 </body>
 

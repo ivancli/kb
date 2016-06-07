@@ -12,8 +12,6 @@
 @stop
 @section('content')
 
-    {!! Auth::user()->roles !!}
-
     Test page
 
 @stop

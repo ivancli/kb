@@ -9,7 +9,7 @@
 namespace App;
 
 
-use Zizaco\Entrust\Middleware\EntrustRole;
+use Zizaco\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {

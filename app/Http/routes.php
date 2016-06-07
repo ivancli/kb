@@ -30,6 +30,18 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => ['auth', 'role:chams_admin|chams_asset_distributor|chams_asset_manager|chams_client|chams_reporter|chams_staff']
     ], function () {
         Route::get('/', ['uses' => 'CHAMS\RoutingController@home']);
-        Route::get('users', ['uses' => 'CHAMS\RoutingController@users']);
+        Route::get('users', ['middleware' => ['auth', 'role:chams_admin'], 'uses' => 'CHAMS\RoutingController@users']);
     });
+
+//    Route::group([
+//        'prefix' => 'user',
+//        'middleware' => ['auth', 'role:kb_admin']
+//    ],function(){
+//        Route::get('/', ['uses' => 'UserController@users']);
+//        Route::get('{user_id}', ['uses' => 'UserController@user']);
+//    });
+
+    /*we need to have separated url for ajax and html page calls because chrome cache*/
+    Route::resource('user', 'UserController');
+    Route::resource('ajax/user', 'UserController');
 });
