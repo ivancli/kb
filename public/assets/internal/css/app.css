@@ -16,6 +16,7 @@
 .main-search {
     background-image: none;
     padding-left: 0;
+    width: 85%;
 }
 
 .login-paragraph {
@@ -28,4 +29,52 @@
 
 .error-msgs li {
     color: #FFABAB;
+}
+
+.table > thead > tr > th {
+    font-weight: bold;
+}
+
+#tbl-user {
+    margin-bottom: 0;
+}
+
+/*fa icons in image format*/
+.sa-side-fa-home {
+    background-image: url(../img/icon/fa-home.png);
+}
+
+.sa-side-fa-user {
+    background-image: url(../img/icon/fa-user.png);
+}
+
+.sa-side-fa-ticket {
+    background-image: url(../img/icon/fa-ticket.png);
+}
+
+/* For Higher DPI */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.25), only screen and (min--moz-device-pixel-ratio: 1.25), only screen and (     -o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.25), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.25dppx) {
+    .sa-side-fa-home {
+        background-image: url(../img/icon/fa-home%402x.png);
+        background-size: 25px 25px;
+    }
+
+    .sa-side-fa-user {
+        background-image: url(../img/icon/fa-user%402x.png);
+        background-size: 25px 25px;
+    }
+
+    .sa-side-fa-ticket {
+        background-image: url(../img/icon/fa-ticket%402x.png);
+        background-size: 25px 25px;
+    }
+}
+
+.control-inline {
+    width: auto;
+    display: inline-block;
+}
+
+select.control-inline {
+    padding-right: 30px;
 }

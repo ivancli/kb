@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class UserController extends Controller
                 return $users;
             }
         } else {
-            return view('user.index');
+            return view('admin.user.index');
         }
     }
 
@@ -55,8 +56,48 @@ class UserController extends Controller
 
     }
 
-    public function destroy($user_id)
+    public function destroy(Request $request, $user_id)
     {
+        try {
+            $user = User::findOrFail($user_id);
+            $user->status = "deleted";
+            $user->save();
+            $output = array(
+                "status" => true,
+                "data" => array(
+                    "user" => $user
+                )
+            );
+            if ($request->json()) {
+                return response()->json($output);
+            } else {
+                return $output;
+            }
+        } catch (ModelNotFoundException $e) {
+            abort(404, "Page not found");
+            return false;
+        }
+    }
 
+    public function revive(Request $request, $user_id)
+    {
+        try {
+            $user = User::findOrFail($user_id);
+            $user->status = "inactive";
+            $user->save();
+            $output = array(
+                "status" => array(
+                    "user" => $user
+                )
+            );
+            if ($request->json()) {
+                return response()->json($output);
+            } else {
+                return $output;
+            }
+        } catch (ModelNotFoundException $e) {
+            abort(404, "Page not found");
+            return false;
+        }
     }
 }

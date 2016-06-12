@@ -17,8 +17,8 @@ class CHAMSUserRoleSeeder extends Seeder
         date_default_timezone_set('Australia/Sydney');
         DB::table('role_user')->insert([
             [
-                'role_id' => 1,
-                'user_id' => 16
+                'role_id' => 3,
+                'user_id' => 1
             ]
         ]);
     }

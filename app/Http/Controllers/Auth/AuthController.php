@@ -78,6 +78,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
             'confirmation_code' => $confirmationCode,
         ]);
+        $user->attachRole(2);
 
         Mail::send('emails.auth.verify', array("confirmation_code" => $confirmationCode), function ($message) {
             $message->to(Input::get('email'), Input::get('name'))
@@ -111,7 +112,7 @@ class AuthController extends Controller
         $output->responseText = "Thank you for your registration. A confirmation email has been sent to your mailbox. Please follow the instruction to activate your account. Enjoy browsing ICL Knowledge Base.";
 
         if ($request->ajax()) {
-            return json_encode($output);
+            return response()->json($output);
         } else {
             return redirect($this->redirectPath());
         }

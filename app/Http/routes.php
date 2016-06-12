@@ -42,6 +42,6 @@ Route::group(['middleware' => ['web']], function () {
 //    });
 
     /*we need to have separated url for ajax and html page calls because chrome cache*/
-    Route::resource('user', 'UserController');
-    Route::resource('ajax/user', 'UserController');
+    Route::resource('admin/user', 'UserController');
+    Route::put('admin/user/{user_id}/revive', 'UserController@revive');
 });
