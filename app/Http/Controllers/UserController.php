@@ -33,12 +33,14 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-
+        abort(404, "Page not found");
+        return false;
     }
 
     public function store()
     {
-
+        abort(404, "Page not found");
+        return false;
     }
 
     public function show($user_id)
@@ -48,7 +50,15 @@ class UserController extends Controller
 
     public function edit($user_id)
     {
-
+        try {
+            $user = User::findOrFail($user_id);
+            return view('admin.user.edit')->with(array(
+                "user" => $user,
+            ));
+        } catch (ModelNotFoundException $e) {
+            abort(404, "Page not found");
+            return false;
+        }
     }
 
     public function update(Request $request, $user_id)

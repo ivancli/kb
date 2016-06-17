@@ -92,7 +92,7 @@
                     {
                         "name": "Actions",
                         "orderable": false,
-                        "width": 100
+                        "width": 150
 
                     }
                 ]
@@ -122,11 +122,13 @@
                         ).html(),
                         $("<div>").append(
                                 $("<div>").addClass("text-center").append(
+                                        /* edit */
                                         $("<a>").attr({
-                                            "href": "{{url('admin/user/')}}/" + user.id
+                                            "href": "{{url('admin/user/')}}/" + user.id + "/edit"
                                         }).addClass("btn btn-sm btn-alt").append(
                                                 $("<i>").addClass("fa fa-pencil")
                                         ),
+                                        /* delete */
                                         user.status != "deleted" ?
                                                 $("<button>").attr({
                                                     "onclick": "deleteUserOnClick(this); return false;",
@@ -140,7 +142,17 @@
                                                     "data-user": JSON.stringify(user)
                                                 }).addClass("btn btn-sm btn-alt").append(
                                                         $("<i>").addClass("fa fa-undo")
+                                                ),
+                                        /* unlock */
+                                        user.status == "locked" ?
+                                                $("<button>").attr({
+                                                    "onclick": "unlockUserOnClick(this); return false;",
+                                                    "data-user": JSON.stringify(user)
+                                                }).addClass("btn btn-sm btn-alt").append(
+                                                        $("<i>").addClass("fa fa-unlock-alt")
                                                 )
+                                                :
+                                                ""
                                 )
                         ).html()
 
@@ -208,6 +220,28 @@
                     affirmativeDismiss: true,
                     negativeDismiss: true,
                     affirmativeText: "Yes, revive",
+                    negativeText: "Cancel"
+                })
+            } else {
+                alertP("Revive User", "Unable to revive user due to incorrect user information.");
+            }
+        }
+
+        function unlockUserOnClick(el) {
+            if (typeof $(el).attr("data-user") != 'undefined') {
+                var user = JSON.parse($(el).attr("data-user"));
+                confirmP("Unlock User", "Are you sure you want to unlock user: " + user.name + "?", {
+                    affirmativeCallback: function () {
+                        reviveUser(user.id, function () {
+                            alertP("Unlock User", user.name + " is now unlocked and inactive.");
+                            drawUserList();
+                        }, function (xhr) {
+                            alertP("Unlock User", "Unable to unlock user: " + user.name + ". Error message: " + xhr.responseText + ". Please try again later.");
+                        });
+                    },
+                    affirmativeDismiss: true,
+                    negativeDismiss: true,
+                    affirmativeText: "Yes, unlock",
                     negativeText: "Cancel"
                 })
             } else {

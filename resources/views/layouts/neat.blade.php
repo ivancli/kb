@@ -134,7 +134,7 @@
                         <span class="menu-item">Home</span>
                     </a>
                 </li>
-                @if(Auth::user()->can('view_user'))
+                @if(Auth::check() && Auth::user()->can('view_user'))
                     <li class="dropdown {!! classActivePath('admin') !!}">
                         <a class="sa-side-fa-user" href="#">
                             <span class="menu-item">Administration</span>
