@@ -78,3 +78,11 @@
 select.control-inline {
     padding-right: 30px;
 }
+
+table th.shrink, table td.shrink {
+    width: 1%;
+}
+
+.form-group{
+    margin-bottom: 10px;
+}

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
+use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -20,14 +22,17 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::all();
-            if ($request->json()) {
+            $users = User::with("roles")->get();
+            if ($request->wantsJson()) {
                 return new JsonResponse($users);
             } else {
                 return $users;
             }
         } else {
-            return view('admin.user.index');
+            $roles = Role::all();
+            return view('admin.user.index')->with(array(
+                "roles" => $roles
+            ));
         }
     }
 
@@ -52,8 +57,10 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($user_id);
+            $roles = Role::all();
             return view('admin.user.edit')->with(array(
                 "user" => $user,
+                "roles" => $roles
             ));
         } catch (ModelNotFoundException $e) {
             abort(404, "Page not found");
@@ -63,7 +70,66 @@ class UserController extends Controller
 
     public function update(Request $request, $user_id)
     {
-
+        $validator = Validator::make($request->all(), [
+            "name" => "required|max:255",
+            "email" => "exists:users|max:255",
+            "status" => "in:inactive,active,locked,deleted",
+        ]);
+        if ($validator->fails()) {
+            $output = new \stdClass();
+            $output->status = true;
+            $output->errors = $validator->errors();
+            if ($request->ajax()) {
+                if ($request->wantsJson()) {
+                    return new JsonResponse($output);
+                } else {
+                    return $output;
+                }
+            } else {
+                return back()->withErrors($validator->errors())->withInput();
+            }
+        }
+        try {
+            $user = User::findOrFail($user_id);
+            $user->name = $request->get("name");
+            $user->status = $request->get("status");
+            $user->save();
+            $user->detachRoles();
+            $roles = $request->get("roles");
+            if (is_array($roles)) {
+                foreach ($roles as $roleID) {
+                    $role = Role::findOrFail($roleID);
+                    $user->attachRole($role);
+                }
+            }
+            $output = new \stdClass();
+            $output->status = true;
+            $output->data = array(
+                "user" => $user
+            );
+            if ($request->ajax()) {
+                if ($request->wantsJson()) {
+                    return new JsonResponse($output);
+                } else {
+                    return $output;
+                }
+            } else {
+                return redirect()->route("admin.user", [$user]);
+            }
+        } catch (ModelNotFoundException $e) {
+            $output = new \stdClass();
+            $output->status = true;
+            $output->errors = "User not found";
+            if ($request->ajax()) {
+                if ($request->wantsJson()) {
+                    return new JsonResponse($output);
+                } else {
+                    return $output;
+                }
+            } else {
+                return back()->withErrors(array("User not found"))->withInput();
+            }
+        }
     }
 
     public function destroy(Request $request, $user_id)
@@ -72,20 +138,21 @@ class UserController extends Controller
             $user = User::findOrFail($user_id);
             $user->status = "deleted";
             $user->save();
-            $output = array(
-                "status" => true,
-                "data" => array(
-                    "user" => $user
-                )
+            $output = new \stdClass();
+            $output->status = true;
+            $output->data = array(
+                "user" => $user
             );
-            if ($request->json()) {
-                return response()->json($output);
+        } catch (ModelNotFoundException $e) {
+            $output = new \stdClass();
+            $output->status = false;
+            $output->errors = array("User not found");
+        } finally {
+            if ($request->ajax()) {
+                return new JsonResponse($output);
             } else {
                 return $output;
             }
-        } catch (ModelNotFoundException $e) {
-            abort(404, "Page not found");
-            return false;
         }
     }
 
@@ -100,10 +167,14 @@ class UserController extends Controller
                     "user" => $user
                 )
             );
-            if ($request->json()) {
-                return response()->json($output);
+            if ($request->ajax()) {
+                if ($request->wantsJson()) {
+                    return new JsonResponse($output);
+                } else {
+                    return $output;
+                }
             } else {
-                return $output;
+                return redirect()->route("admin.user");
             }
         } catch (ModelNotFoundException $e) {
             abort(404, "Page not found");

@@ -24,32 +24,38 @@
                     <div class="tile-config dropdown">
                         <a class="tile-menu" href="#" data-toggle="dropdown"></a>
                         <ul class="dropdown-menu animated pull-right text-right">
-                            <li><a href="#">Refresh</a></li>
-                            <li><a href="#">Settings</a></li>
+                            <li><a href="#" onclick="populateUserList(); return false;">Refresh</a></li>
                         </ul>
                     </div>
                     <div class="listview narrow">
                         <div class="media">
                             <div class="media-body">
                                 Show &nbsp;
-                                <select class="control-inline form-control input-sm m-b-5" id="sel-status" onchange="statusFilterOnChange();">
+                                <select class="control-inline form-control input-sm m-b-5" id="sel-status" onchange="drawUserTable();">
                                     <option value="">all</option>
                                     <option value="active">active</option>
                                     <option value="inactive">inactive</option>
                                     <option value="locked">locked</option>
                                     <option value="deleted">deleted</option>
                                 </select>
-                                &nbsp; users
+                                &nbsp;
+                                <select class="control-inline form-control input-sm m-b-5" id="sel-role" onchange="drawUserTable()">
+                                    <option value="">ICL KB Users</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->display_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
                     <table id="tbl-user" class="tile table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th class="shrink">ID</th>
                                 <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Status</th>
+                                <th>Roles</th>
+                                <th class="shrink">Status</th>
                                 <th>Registered at</th>
                                 <th></th>
                             </tr>
@@ -69,6 +75,38 @@
     <script>
         var userTable = null;
         $(function () {
+
+            /** custom search */
+            if (jQuery.fn.dataTable.ext.search.length == 0) {
+                jQuery.fn.dataTable.ext.search.push(
+                        function (settings, columns, dataIndex) {
+                            var $status = $("#sel-status");
+                            var $role = $("#sel-role");
+
+                            /**
+                             * predefine filter result
+                             * if filter value not set, pass the filter
+                             * */
+                            var statusResult = $status.val() ? false : true;
+                            var roleResult = $role.val() ? false : true;
+                            $.each(columns, function (index, column) {
+                                var $column = $("<div>").html(column);
+                                if ($status.val() && $column.find("[data-status]").length > 0 && $status.val() == $column.find("[data-status]").attr("data-status")) {
+                                    statusResult = true;
+                                }
+                                if ($role.val() && $column.find("[data-id]").length > 0) {
+                                    roleResult = $column.find("[data-id]").filter(function () {
+                                                return $role.val() == $(this).attr("data-id");
+                                            }).length > 0;
+                                }
+                            });
+                            console.info("statusResult", statusResult);
+                            console.info("roleResult", roleResult);
+                            return statusResult && roleResult;
+                        }
+                );
+            }
+
             userTable = $("#tbl-user").DataTable({
                 "dom": '<>',
                 "paging": false,
@@ -84,7 +122,12 @@
                         "name": "Email"
                     },
                     {
-                        "name": "Status"
+                        "name": "Roles",
+                        "type": "string"
+                    },
+                    {
+                        "name": "Status",
+                        "type": "string"
                     },
                     {
                         "name": "Register at"
@@ -95,13 +138,18 @@
                         "width": 150
 
                     }
-                ]
+                ],
+                "language": {
+                    "zeroRecords": "No users in this list",
+                    "emptyTable": "No users in this list"
+                }
             });
-            drawUserList();
+            populateUserList();
         });
 
         function loadUserList() {
-            $("#tbl-user").find("tbody").empty();
+            clearUserTable();
+            setLoadingMessage();
             loadUsers(function (users) {
                 $.each(users, function (index, user) {
                     userTable.row.add([
@@ -114,8 +162,17 @@
                         $("<div>").append(
                                 $("<div>").text(user.email)
                         ).html(),
+                        $("<div>").append(function () {
+                            var $div = $("<div>");
+                            $.each(user.roles, function (index, role) {
+                                $div.append(
+                                        $("<div>").attr("data-id", role.id).text(role.display_name)
+                                )
+                            });
+                            return $div.html();
+                        }).html(),
                         $("<div>").append(
-                                $("<div>").text(user.status)
+                                $("<div>").attr("data-status", user.status).text(user.status)
                         ).html(),
                         $("<div>").append(
                                 $("<div>").text(user.created_at)
@@ -124,7 +181,8 @@
                                 $("<div>").addClass("text-center").append(
                                         /* edit */
                                         $("<a>").attr({
-                                            "href": "{{url('admin/user/')}}/" + user.id + "/edit"
+                                            "href": "{{url('admin/user/')}}/" + user.id + "/edit",
+                                            "title": "Edit"
                                         }).addClass("btn btn-sm btn-alt").append(
                                                 $("<i>").addClass("fa fa-pencil")
                                         ),
@@ -132,14 +190,16 @@
                                         user.status != "deleted" ?
                                                 $("<button>").attr({
                                                     "onclick": "deleteUserOnClick(this); return false;",
-                                                    "data-user": JSON.stringify(user)
+                                                    "data-user": JSON.stringify(user),
+                                                    "title": "Delete"
                                                 }).addClass("btn btn-sm btn-alt").append(
                                                         $("<i>").addClass("fa fa-times")
                                                 )
                                                 :
                                                 $("<button>").attr({
                                                     "onclick": "reviveUserOnClick(this); return false;",
-                                                    "data-user": JSON.stringify(user)
+                                                    "data-user": JSON.stringify(user),
+                                                    "title": "Revive"
                                                 }).addClass("btn btn-sm btn-alt").append(
                                                         $("<i>").addClass("fa fa-undo")
                                                 ),
@@ -147,7 +207,8 @@
                                         user.status == "locked" ?
                                                 $("<button>").attr({
                                                     "onclick": "unlockUserOnClick(this); return false;",
-                                                    "data-user": JSON.stringify(user)
+                                                    "data-user": JSON.stringify(user),
+                                                    "title": "Unlock"
                                                 }).addClass("btn btn-sm btn-alt").append(
                                                         $("<i>").addClass("fa fa-unlock-alt")
                                                 )
@@ -158,7 +219,7 @@
 
                     ]);
                 });
-                userTable.draw();
+                drawUserTable();
             })
         }
 
@@ -189,7 +250,7 @@
                     affirmativeCallback: function () {
                         deleteUser(user.id, function () {
                             alertP("Delete User", user.name + " is now deleted.");
-                            drawUserList();
+                            populateUserList();
                         }, function (xhr) {
                             alertP("Delete User", "Unable to delete user: " + user.name + ". Error message: " + xhr.responseText + ". Please try again later.");
                         });
@@ -212,7 +273,7 @@
                     affirmativeCallback: function () {
                         reviveUser(user.id, function () {
                             alertP("Revive User", user.name + " is now revived and inactive.");
-                            drawUserList();
+                            populateUserList();
                         }, function (xhr) {
                             alertP("Revive User", "Unable to revive user: " + user.name + ". Error message: " + xhr.responseText + ". Please try again later.");
                         });
@@ -234,7 +295,7 @@
                     affirmativeCallback: function () {
                         reviveUser(user.id, function () {
                             alertP("Unlock User", user.name + " is now unlocked and inactive.");
-                            drawUserList();
+                            populateUserList();
                         }, function (xhr) {
                             alertP("Unlock User", "Unable to unlock user: " + user.name + ". Error message: " + xhr.responseText + ". Please try again later.");
                         });
@@ -291,19 +352,31 @@
             })
         }
 
-        function drawUserList() {
+        function populateUserList() {
             if (userTable != null) {
-                userTable.clear();
                 loadUserList();
             }
         }
 
-        function statusFilterOnChange() {
-            console.info('$("#sel-status").val()', $("#sel-status").val());
+        function drawUserTable() {
             if (userTable != null) {
-                userTable.columns("Status:name").search($("#sel-status").val());
                 userTable.draw();
             }
+        }
+
+        function clearUserTable() {
+            if (userTable != null) {
+                userTable.clear();
+                drawUserTable();
+            }
+        }
+
+        function setLoadingMessage() {
+            $("#tbl-user").find(".dataTables_empty").html(
+                    $("<div>").append(
+                            $("<div>").addClass("text-center").text("Loading users...")
+                    ).html()
+            );
         }
     </script>
 @stop

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -62,6 +64,55 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
+
+    /**
+     * override login process by adding status validation
+     *
+     * @param Request $request
+     * @return AuthController|\Illuminate\Http\RedirectResponse
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+        $credentials = $this->getCredentials($request);
+        if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+            if (Auth::check() && (Auth::user()->status == "locked" || Auth::user()->status == "deleted")) {
+                $this->fireLockoutEvent($request);
+                Auth::guard($this->getGuard())->logout();
+                $output = new \stdClass();
+                $output->status = false;
+                $output->responseJSON = array(
+                    "Your account is locked out. Please contact Ivan for more information."
+                );
+                if ($request->ajax()) {
+                    if ($request->wantsJson()) {
+                        return new JsonResponse($output);
+                    } else {
+                        return $output;
+                    }
+                } else {
+                    return $this->sendLockoutResponse($request);
+                }
+            }
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+
+        if ($throttles && !$lockedOut) {
+            $this->incrementLoginAttempts($request);
+        }
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -167,11 +218,15 @@ class AuthController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        if ($request->json()) {
+        if ($request->ajax()) {
             $output = new \stdClass();
             $output->status = false;
             $output->responseJSON = array($this->loginUsername() => $this->getFailedLoginMessage());
-            return json_encode($output);
+            if ($request->wantsJson()) {
+                return new JsonResponse($output);
+            } else {
+                return $output;
+            }
         } else {
             return redirect()->back()
                 ->withInput($request->only($this->loginUsername(), 'remember'))

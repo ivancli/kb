@@ -34,6 +34,14 @@
                         </div>
                         {!! Form::model($user, array('route' => array('admin.user.update', $user->id), 'method' => 'patch', 'files' => true, 'onsubmit' => 'return false;', "id" => "frm-update-user")) !!}
                         @include('admin.user.forms.user')
+                        <div class="form-group">
+                            <label for="roles">Roles</label>
+                            <select name="roles[]" id="roles" class="form-control input-sm" multiple="multiple">
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}" {{$user->hasRole($role->name) ? "selected" : ""}}>{{$role->display_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         {!! Form::submit('Save', ["class"=>"btn btn-default btn-sm", "href"=>"#", "onclick" => "updateUserOnClick()"]) !!}
                         {!! Form::close() !!}
                     </div>
@@ -52,9 +60,9 @@
                 "data": $("#frm-update-user").serialize(),
                 "dataType": "json",
                 "success": function (response) {
-                    if(response.status == true){
-
-                    }else{
+                    if (response.status == true) {
+                        window.location.href = "{{url('admin/user')}}";
+                    } else {
                         if (response.responseJSON) {
                             try {
                                 var $error = response.responseJSON;
@@ -94,8 +102,7 @@
             })
         }
 
-        function showEditUserErrMsg(callback)
-        {
+        function showEditUserErrMsg(callback) {
             $(".error-msgs").slideDown(function () {
                 if ($.isFunction(callback)) {
                     callback();
