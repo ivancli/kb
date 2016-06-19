@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{asset('assets/external/package/DataTables-1.10.12/media/css/dataTables.bootstrap.min.css')}}">
 @stop
 @section('content')
-
+    <h4 class="page-title">Manage Users</h4>
     <div class="block-area">
         <div class="row">
             <div class="col-sm-12">

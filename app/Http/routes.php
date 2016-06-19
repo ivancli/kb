@@ -11,6 +11,10 @@
 |
 */
 Route::group(['middleware' => ['web']], function () {
+
+    /**
+     * @start KB Authentication Routes
+     */
     Route::get('/', 'RoutingController@home');
     Route::group(['prefix' => 'login'], function () {
         Route::get('/', ['middleware' => ['guest'], 'uses' => 'RoutingController@login']);
@@ -23,7 +27,29 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('reset/{encrypted_email}/{confirmation_code}', 'Auth\ForgotController@viewReset');
     Route::post('reset', 'Auth\ForgotController@postReset');
     Route::get('logout', 'Auth\AuthController@logout');
+    /**
+     * @end KB Authentication Routes
+     */
 
+
+    /**
+     * @start User Routes
+     */
+    Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
+        Route::group(['prefix' => 'profile'], function(){
+            Route::get('/', ['uses' => 'User\ProfileController@index']);
+            Route::get('edit', ['uses' => 'User\ProfileController@edit']);
+            Route::get('{id}', ['uses' => 'User\ProfileController@show']);
+            Route::put('/', ['uses' => 'User\ProfileController@update']);
+        });
+    });
+    /**
+     * @end User Routes
+     */
+
+    /**
+     * @start CHAMS Routes
+     */
     /*QBE CHAMS*/
     Route::group([
         'prefix' => 'chams',
@@ -32,16 +58,18 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/', ['uses' => 'CHAMS\RoutingController@home']);
         Route::get('users', ['middleware' => ['auth', 'role:chams_admin'], 'uses' => 'CHAMS\RoutingController@users']);
     });
+    /**
+     * @end CHAMS Routes
+     */
 
-//    Route::group([
-//        'prefix' => 'user',
-//        'middleware' => ['auth', 'role:kb_admin']
-//    ],function(){
-//        Route::get('/', ['uses' => 'UserController@users']);
-//        Route::get('{user_id}', ['uses' => 'UserController@user']);
-//    });
-
-    /*we need to have separated url for ajax and html page calls because chrome cache*/
-    Route::resource('admin/user', 'UserController');
-    Route::put('admin/user/{user_id}/revive', 'UserController@revive');
+    /**
+     * @start Admin Routes
+     */
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
+        Route::resource('user', 'UserController');
+        Route::put('user/{user_id}/revive', 'UserController@revive');
+    });
+    /**
+     * @end Admin Routes
+     */
 });

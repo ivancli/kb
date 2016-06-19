@@ -14,7 +14,7 @@
 @section('link')
 @stop
 @section('content')
-
+    <h4 class="page-title">Edit User: {{$user->name}}</h4>
     <div class="block-area">
         <div class="row">
             <div class="col-sm-12">

@@ -100,7 +100,7 @@
                         <img class="profile-pic animated" src="{{asset('assets/internal/img/blue-user-icon.png')}}" alt="">
                     </a>
                     <ul class="dropdown-menu profile-menu">
-                        <li><a href="#">My Profile</a>
+                        <li><a href="{{url('user/profile')}}">My Profile</a>
                             <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                         <li><a href="#">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i>
                         </li>

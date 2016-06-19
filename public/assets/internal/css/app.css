@@ -86,3 +86,7 @@ table th.shrink, table td.shrink {
 .form-group{
     margin-bottom: 10px;
 }
+
+.cover .profile-pic{
+    background-color: #dddddd;
+}
