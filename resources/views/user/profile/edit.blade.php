@@ -14,6 +14,7 @@
 @section('link')
 @stop
 @section('content')
+    <h4 class="page-title">Edit Profile</h4>
     Edit Profile
     <br>
     {{$user}}

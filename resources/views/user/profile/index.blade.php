@@ -30,7 +30,7 @@
                         <img alt="" class="w-100" src="{{asset('assets/internal/img/default-profile-cover.jpg')}}">
                         <img alt="" src="{{asset('assets/internal/img/blue-user-icon.png')}}" class="profile-pic">
                         <div class="profile-btn">
-                            <button class="btn btn-alt btn-sm"><i class="icon-bubble"></i> <span>Edit Profile</span></button>
+                            <a class="btn btn-alt btn-sm" href="{{url('user/profile/edit')}}"><i class="icon-bubble"></i> <span>Edit Profile</span></a>
                         </div>
                     </div>
                     <div class="p-5 m-t-15">
