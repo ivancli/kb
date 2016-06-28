@@ -204,7 +204,11 @@ class AuthController extends Controller
             $output->redirectPath = url(Session::pull('url.intended', $this->redirectPath()));
             $output->status = true;
             $output->responseText = "You have already logged in.";
-            return json_encode($output);
+            if ($request->wantsJson()) {
+                return new JsonResponse($output);
+            } else {
+                return $output;
+            }
         } else {
             return redirect()->intended($this->redirectPath());
         }
