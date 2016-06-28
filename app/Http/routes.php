@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['middlewareGroups' => ['web']], function () {
+//Route::group(['middlewareGroups' => ['web']], function () {
 
     /**
      * @start KB Authentication Routes
@@ -72,4 +72,4 @@ Route::group(['middlewareGroups' => ['web']], function () {
     /**
      * @end Admin Routes
      */
-});
+//});
