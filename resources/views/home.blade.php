@@ -11,7 +11,7 @@
     ICL KB - Home
 @stop
 @section('content')
-
-    Test page
-
+    <h4 class="page-title">
+        Dashboard
+    </h4>
 @stop

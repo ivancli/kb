@@ -11,5 +11,5 @@
     ICL KB - CHAMS
 @stop
 @section('content')
-    <h4 class="page-title">Manage Users</h4>
+    <h4 class="page-title">CHAMS Home</h4>
 @stop

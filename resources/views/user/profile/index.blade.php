@@ -28,24 +28,39 @@
                 <div class="tile-light p-10 m-b-15">
                     <div class="cover p-relative">
                         <img alt="" class="w-100" src="{{asset('assets/internal/img/default-profile-cover.jpg')}}">
-                        <img alt="" src="{{asset('assets/internal/img/blue-user-icon.png')}}" class="profile-pic">
+                        @if(!is_null($user->info) && !is_null($user->info))
+                            <img alt="" src="{{asset('assets/internal/img/blue-user-icon.png')}}" class="profile-pic">
+                        @else
+                            {{-- create a profile picture route and controller to access profile image --}}
+                            <img alt="" src="{{asset('assets/internal/img/blue-user-icon.png')}}" class="profile-pic">
+                        @endif
+
                         <div class="profile-btn">
-                            <a class="btn btn-alt btn-sm" href="{{url('user/profile/edit')}}"><i class="icon-bubble"></i> <span>Edit Profile</span></a>
+                            <a class="btn btn-alt btn-sm" href="{{url('user/profile/edit')}}"><i class="icon-bubble"></i>
+                                <span>Edit Profile</span></a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="p-5 p-l-15 m-t-15">
-                                <h4><strong>{{$user->name}}</strong></h4>
+                                <h4><strong>{{ $user->name }}</strong></h4>
                             </div>
-                            <div class="p-5 p-l-15">
-                                @foreach($user->roles as $role)
-                                    <div><i class="fa fa-user"></i> &nbsp; {{$role->display_name}}</div>
-                                @endforeach
-                            </div>
-                            <div class="p-5 p-l-15">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget risus rhoncus, cursus purus vitae, venenatis eros. Phasellus at tincidunt risus. Integer sed massa fermentum, feugiat arcu quis, ultrices nisi. Quisque commodo nisi scelerisque, tempus diam ac, dignissim tellus. Mauris adipiscing elit tortor, dignissim auctor diam mollis sed. Nulla eu dui non velit accumsan scelerisque eget et felis.
-                            </div>
+
+                            {{-- roles --}}
+                            @if(count($user->roles) > 0)
+                                <div class="p-5 p-l-15">
+                                    @foreach($user->roles as $role)
+                                        <div><i class="fa fa-tag role-tag"></i> &nbsp; {{ $role->display_name }}</div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            {{-- description --}}
+                            @if(!is_null($user->info))
+                                <div class="p-5 p-l-15">
+                                    {{ $user->info->description }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -11,5 +11,5 @@
     ICL KB - CHAMS
 @stop
 @section('content')
-    CHAMS users page
+    <h4 class="page-title">CHAMS Users</h4>
 @stop

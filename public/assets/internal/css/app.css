@@ -83,10 +83,14 @@ table th.shrink, table td.shrink {
     width: 1%;
 }
 
-.form-group{
+.form-group {
     margin-bottom: 10px;
 }
 
-.cover .profile-pic{
+.cover .profile-pic {
     background-color: #dddddd;
+}
+
+.role-tag {
+    color: #a77606;
 }

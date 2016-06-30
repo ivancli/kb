@@ -26,5 +26,17 @@ class AdminUserSeeder extends Seeder
                 'updated_at' => new DateTime
             ],
         ]);
+        DB::table('user_info')->insert([
+            [
+                'user_id' => 1,
+                'description' => "Administrator and creator of ICL Knowledge Base"
+            ]
+        ]);
+        DB::table('user_pref')->insert([
+            [
+                'user_id' => 1,
+                'profile_view' => "friends"
+            ]
+        ]);
     }
 }
