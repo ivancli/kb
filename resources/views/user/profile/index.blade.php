@@ -28,12 +28,7 @@
                 <div class="tile-light p-10 m-b-15">
                     <div class="cover p-relative">
                         <img alt="" class="w-100" src="{{asset('assets/internal/img/default-profile-cover.jpg')}}">
-                        @if(!is_null($user->info) && !is_null($user->info))
-                            <img alt="" src="{{asset('assets/internal/img/blue-user-icon.png')}}" class="profile-pic">
-                        @else
-                            {{-- create a profile picture route and controller to access profile image --}}
-                            <img alt="" src="{{asset('assets/internal/img/blue-user-icon.png')}}" class="profile-pic">
-                        @endif
+                        <img alt="" src="{{url('media/profile/' . rawurlencode($user->name) . '/' . $user->id)}}" class="profile-pic">
 
                         <div class="profile-btn">
                             <a class="btn btn-alt btn-sm" href="{{url('user/profile/edit')}}"><i class="icon-bubble"></i>

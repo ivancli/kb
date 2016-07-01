@@ -97,7 +97,7 @@
                         <!-- Profile Menu -->
                 <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                     <a href="#" data-toggle="dropdown">
-                        <img class="profile-pic animated" src="{{asset('assets/internal/img/blue-user-icon.png')}}" alt="">
+                        <img class="profile-pic animated" src="{{url('media/profile/' . rawurlencode(Auth::user()->name) . '/' . Auth::user()->id)}}" alt="">
                     </a>
                     <ul class="dropdown-menu profile-menu">
                         <li><a href="{{url('user/profile')}}">My Profile</a>

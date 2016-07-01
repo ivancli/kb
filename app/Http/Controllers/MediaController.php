@@ -19,17 +19,26 @@ class MediaController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            if (!is_null($user->info) && !is_null($user->info->profile_pic)) {
-                $imageStr = base64_decode($user->info->profile_pic);
-                return response($imageStr)
-                    ->header('Content-Type', "image/jpeg")
-                    ->header('Content-Disposition', 'inline; filename=profile')
-                    ->header('Content-Length', strlen($imageStr));
-            }else{
-                
+            if ($user->name == $name) {
+                if (!is_null($user->info) && !is_null($user->info->profile_pic)) {
+                    $imageStr = base64_decode($user->info->profile_pic);
+                    return response($imageStr)
+                        ->header('Content-Type', "image/jpeg")
+                        ->header('Content-Disposition', 'inline; filename=profile')
+                        ->header('Content-Length', strlen($imageStr));
+                }
             }
+            $imageStr = file_get_contents(asset('assets/internal/img/blue-user-icon.png'));
+            return response($imageStr)
+                ->header('Content-Type', "image/jpeg")
+                ->header('Content-Disposition', 'inline; filename=profile')
+                ->header('Content-Length', strlen($imageStr));
         } catch (ModelNotFoundException $e) {
-
+            $imageStr = file_get_contents(asset('assets/internal/img/blue-user-icon.png'));
+            return response($imageStr)
+                ->header('Content-Type', "image/jpeg")
+                ->header('Content-Disposition', 'inline; filename=profile')
+                ->header('Content-Length', strlen($imageStr));
         }
     }
 }
