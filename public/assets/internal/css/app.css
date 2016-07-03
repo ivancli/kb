@@ -94,3 +94,21 @@ table th.shrink, table td.shrink {
 .role-tag {
     color: #a77606;
 }
+
+.current-profile-pic {
+    max-width: 100%;
+    min-width: 150px;
+}
+
+#preview-profile-pic {
+    max-width: 100%;
+    min-width: 150px;
+}
+
+.modal-template {
+    display: none;
+}
+
+#new-profile-pic {
+    display: none;
+}

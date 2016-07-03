@@ -1,11 +1,23 @@
 /**
  * Created by Ivan on 7/06/2016.
  */
+
+/**
+ * Generate alert popup
+ * @param title
+ * @param bodyText
+ */
 function alertP(title, bodyText) {
     var $modal = popupHTML(title, bodyText);
     $modal.modal();
 }
 
+/**
+ * Generate confirmation popup
+ * @param title
+ * @param bodyText
+ * @param btnOpts
+ */
 function confirmP(title, bodyText, btnOpts) {
     var $footer = $("<div>").append(
         $("<button>")
@@ -37,15 +49,26 @@ function confirmP(title, bodyText, btnOpts) {
     $modal.modal();
 }
 
-function popupHTML(title, $content, $footer) {
+/**
+ * Create and append popup HTML
+ * @param title
+ * @param $content
+ * @param $footer
+ * @param dialogSize
+ * @returns {void|*|jQuery}
+ */
+function popupHTML(title, $content, $footer, dialogSize) {
     if (typeof $footer == 'undefined') {
         $footer = $("<button>").addClass("btn").attr({
             "type": "button",
             "data-dismiss": "modal"
         }).text("OK");
     }
+    if (typeof dialogSize == "undefined") {
+        dialogSize = "modal-sm";
+    }
     return $("<div>").attr("id", randomString(10)).addClass("modal fade popup").append(
-        $("<div>").addClass("modal-dialog modal-sm").append(
+        $("<div>").addClass("modal-dialog " + dialogSize).append(
             $("<div>").addClass("modal-content").append(
                 $("<div>").addClass("modal-header").append(
                     $("<button>").addClass("close").attr({
@@ -66,6 +89,12 @@ function popupHTML(title, $content, $footer) {
     );
 }
 
+/**
+ * Generate random string
+ * @param length
+ * @param chars
+ * @returns {string}
+ */
 function randomString(length, chars) {
     if (typeof chars == 'undefined') {
         chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -73,4 +102,20 @@ function randomString(length, chars) {
     var result = '';
     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
+}
+
+/**
+ * Load Data URL from HTML input
+ * @param input
+ */
+function readURLFromInput(input, callback) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            if (typeof callback == "function") {
+                callback(e.target.result);
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 }

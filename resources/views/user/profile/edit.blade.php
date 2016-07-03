@@ -12,14 +12,28 @@
     ICL KB - Edit Profile
 @stop
 @section('link')
+    <link rel="stylesheet" href="{{asset('assets/external/package/Cropper/cropper.min.css')}}">
 @stop
 @section('content')
     <h4 class="page-title">Edit Profile</h4>
     <div class="block-area">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-4 col-sm-6">
                 <div class="tile">
-                    <h2 class="tile-title">Edit Profile</h2>
+                    <h2 class="tile-title">Profile Picture</h2>
+
+                    <div class="p-15 text-center">
+                        <label for="new-profile-pic">
+                            <img src="{{url('media/profile/' . rawurlencode(Auth::user()->name) . '/' . Auth::user()->id)}}" alt="Current Profile Image" class="current-profile-pic">
+                            <input id="new-profile-pic" type="file" accept="image/*" onchange="previewSelectedImage(this);">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-sm-6">
+                <div class="tile">
+                    <h2 class="tile-title">Personal Details</h2>
 
                     <div class="tile-config dropdown">
                         <a class="tile-menu" href="#" data-toggle="dropdown"></a>
@@ -54,6 +68,68 @@
         </div>
     </div>
 
+
+    {{--Cropper Popup Template--}}
+    <div id="upload-profile-pic-content-template" class="modal-template">
+        <div>
+            <img class="preview-profile-pic" src="" alt="Picture">
+        </div>
+    </div>
+    <div id="upload-profile-pic-footer-template" class="modal-template">
+        <div class="text-right">
+            <button class="btn btn-defualt btn-sm" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-default btn-sm">Upload</button>
+        </div>
+    </div>
+    {{--/Cropper Popup Template--}}
 @stop
 @section('script')
+    <script type="text/javascript" src="{{asset('assets/external/package/Cropper/cropper.min.js')}}"></script>
+    <script type="text/javascript">
+        $(function () {
+
+        });
+
+        function previewSelectedImage(el) {
+            readURLFromInput(el, function (data) {
+                var canvasData, cropBoxData;
+                showCropperPopup(function () {
+                    var $image = $(".modal .preview-profile-pic");
+                    $image.one("load", function () {
+                        $image.cropper({
+                            aspectRatio: 1,
+                            autoCropArea: 0.5,
+                            zoomOnWheel: false,
+                            built: function () {
+                                $image.cropper('setCanvasData', canvasData);
+                                $image.cropper('setCropBoxData', cropBoxData);
+                            }
+                        });
+                    }).attr("src", data);
+                }, function () {
+                    var $image = $(".modal .preview-profile-pic");
+                    cropBoxData = $image.cropper('getCropBoxData');
+                    canvasData = $image.cropper('getCanvasData');
+                    $image.cropper('destroy');
+                });
+            });
+        }
+
+        function showCropperPopup(onShown, onHidden) {
+            var $modal = popupHTML("Upload Profile Picture", $("#upload-profile-pic-content-template").html(), $("#upload-profile-pic-footer-template").html(), "modal-md");
+            $modal.on("shown.bs.modal", function () {
+                if ($.isFunction(onShown)) {
+                    onShown();
+                }
+            }).on("hidden.bs.modal", function () {
+                if ($.isFunction(onHidden)) {
+                    onHidden();
+                }
+                $(this).remove();
+            });
+            $modal.modal({
+                backdrop: "static"
+            });
+        }
+    </script>
 @stop
