@@ -112,3 +112,7 @@ table th.shrink, table td.shrink {
 #new-profile-pic {
     display: none;
 }
+
+.lbl-new-profile-pic {
+    cursor: pointer;
+}

@@ -119,3 +119,10 @@ function readURLFromInput(input, callback) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function getFileSizeFromInput(input) {
+    if (input.files && input.files[0] && input.files[0].size) {
+        return input.files[0].size;
+    }
+    return 0;
+}

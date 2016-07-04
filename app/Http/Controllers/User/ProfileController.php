@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Mockery\CountValidator\Exception;
 
 /**
  * Created by PhpStorm.
@@ -79,8 +81,28 @@ class ProfileController extends Controller
         ));
     }
 
-    public function update()
+    public function update(Request $request)
     {
+        try {
+            $input = $request->all();
+            $user = Auth::user();
+            $user->info->fill($input['user']);
+            $user->info->save();
+            $output = new \stdClass();
+            $output->status = true;
+            $output->data = $user;
+            if ($request->ajax()) {
+                if ($request->wantsJson()) {
+                    return new JsonResponse($output);
+                } else {
+                    return $output;
+                }
+            } else {
+                return redirect()->route("user.profile.edit");
+            }
+        } catch (Exception $e) {
 
+            Log::error($e);
+        }
     }
 }

@@ -9,7 +9,7 @@
 
 @extends('layouts.neat')
 @section('title')
-    ICL KB - Edit User
+    ICL KB - User
 @stop
 @section('link')
 @stop
@@ -21,6 +21,13 @@
                 <div class="tile">
                     <h2 class="tile-title">Edit User</h2>
 
+                    <div class="tile-config dropdown">
+                        <a class="tile-menu" href="#" data-toggle="dropdown"></a>
+                        <ul class="dropdown-menu animated pull-right text-right">
+                            <li><a href="#">Refresh</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </div>
                     <div class="p-15">
                         <div class="error-msgs">
                             <ul></ul>
