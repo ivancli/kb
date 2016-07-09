@@ -51,7 +51,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth']], function () {
         Route::get('/', ['uses' => 'User\ProfileController@index']);
         Route::get('edit', ['uses' => 'User\ProfileController@edit']);
         Route::get('{id}', ['uses' => 'User\ProfileController@show']);
-        Route::put('/', ['uses' => 'User\ProfileController@update']);
+        Route::put('/', ['uses' => 'User\ProfileController@update', 'as' => 'user.profile.update']);
     });
 });
 /**

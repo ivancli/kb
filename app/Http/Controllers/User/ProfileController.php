@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\UserInfo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -86,6 +87,12 @@ class ProfileController extends Controller
         try {
             $input = $request->all();
             $user = Auth::user();
+            if(is_null($user->info)){
+                $userInfo = new UserInfo();
+                $userInfo->user_id = $user->id;
+                $userInfo->save();
+            }
+
             $user->info->fill($input['user']);
             $user->info->save();
             $output = new \stdClass();

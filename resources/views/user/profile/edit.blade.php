@@ -50,22 +50,42 @@
                         <div class="error-msgs">
                             <ul></ul>
                         </div>
-                        {!! Form::model($user, array('route' => array('admin.user.update', $user->id), 'method' => 'patch', 'files' => true, 'onsubmit' => 'return false;', "id" => "frm-update-user")) !!}
+                        {!! Form::model($user->info, array('route' => array('user.profile.update'), 'method' => 'put', 'onsubmit' => 'return false;', "id" => "frm-update-user-profile")) !!}
 
                         <div class="form-group">
-                            {!! Form::label('name', 'Full name') !!}
-                            {!! Form::text('name', old('name'), ['class' => 'form-control input-sm', 'placeholder' => 'full name']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('email', 'Email') !!}
-                            {!! Form::text('email', old('email'), ['class' => 'form-control input-sm', 'placeholder' => 'email', 'disabled' => 'disabled']) !!}
-                        </div>
+                            {!! Form::label('title', 'Title') !!} &nbsp;
+                            {!! Form::select('title', array("mr"=>"mr","mrs"=>"mrs","ms"=>"ms","mx"=>"mx","miss"=>"miss","madam"=>"madam","dr"=>"dr","prof"=>"prof"), old('title'), ['class' => 'control-inline form-control input-sm']) !!}
 
-                        <div class="form-group">
-                            {!! Form::label('status', 'Status') !!} &nbsp;
-                            {!! Form::select('status', array('active' => 'active', 'inactive' => 'inactive', 'locked' => 'locked', 'deleted' => 'deleted'), old('status'), ['class' => 'control-inline form-control input-sm m-b-5']) !!}
                         </div>
-                        {!! Form::submit('Save', ["class"=>"btn btn-default btn-sm", "href"=>"#", "onclick" => "updateUserOnClick()"]) !!}
+                        <div class="form-group">
+                            {!! Form::label('dob', 'Date of birth') !!}
+                            {!! Form::text('dob', old('dob'), ['class' => 'form-control input-sm', 'placeholder' => 'dob']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('gender', 'Date of birth') !!} &nbsp;
+                            {!! Form::select('gender', array("male"=>"male","female"=>"female","other"=>"other"), old('gender'), ['class' => 'control-inline form-control input-sm']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('phone', 'Phone') !!} &nbsp;
+                            {!! Form::text('phone', old('phone'), ['class' => 'form-control input-sm', 'placeholder' => 'phone']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('country', 'Country') !!} &nbsp;
+                            {!! Form::text('country', old('country'), ['class' => 'form-control input-sm', 'placeholder' => 'country']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('state', 'State') !!} &nbsp;
+                            {!! Form::text('state', old('state'), ['class' => 'form-control input-sm', 'placeholder' => 'state']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('suburb', 'Suburb') !!} &nbsp;
+                            {!! Form::text('suburb', old('suburb'), ['class' => 'form-control input-sm', 'placeholder' => 'suburb']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('description', 'Description') !!}
+                            {!! Form::textarea('description', old('description'), ['class' => 'form-control input-sm', 'placeholder' => 'description']) !!}
+                        </div>
+                        {!! Form::submit('Save', ["class"=>"btn btn-default btn-sm", "href"=>"#", "onclick" => "updateUserProfileOnClick()"]) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -185,6 +205,10 @@
         function objectDropOnProfilePicture(el, e) {
             e.preventDefault();
             e.stopPropagation();
+        }
+
+        function updateUserProfileOnClick()
+        {
 
         }
     </script>

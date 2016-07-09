@@ -156,7 +156,7 @@ class AuthController extends Controller
         }
 
         Auth::guard($this->getGuard())->login($this->create($request->all()));
-
+        
         $output = new \stdClass();
         $output->redirecPath = url($this->redirectPath());
         $output->status = true;
