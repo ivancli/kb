@@ -141,109 +141,30 @@ function renderImages(dirEntry) {
     readDirectory(dirEntry, function (entries) {
         // Handle no files case.
         if (!entries.length) {
-            footer.textContent = 'Add some files chief!';
-            footer.classList.add('nofiles');
-            return;
+            /* no files */
         }
-
-        footer.classList.remove('nofiles');
-
-        var frag = document.createDocumentFragment();
-
-        var span = document.createElement('span');
-        span.innerHTML = '&laquo;';
-        span.title = 'Move up a directory;';
-        span.addEventListener('click', onThumbnailClick);
-        frag.appendChild(span);
 
         entries.forEach(function (entry, i) {
             var div = document.createElement('div');
 
             div.dataset.fullPath = entry.fullPath;
+            console.info('div.dataset.fullPath', div.dataset.fullPath);
 
             var img = new Image();
             if (entry.isDirectory) {
-                img.src = 'folder.png';
-                div.dataset.isDirectory = 'true';
+                /* it's a folder */
             } else {
                 //img.src = window.URL.createObjectURL(files[i]); // Equivalent to item.getAsFile().
                 entry.file(function (f) {
+                    console.info('entry.toURL()', entry.toURL());
                     img.src = f.type.match('^image/') ? entry.toURL() : 'file.png';
+                    document.body.appendChild(img);
                 }, onError);
             }
 
             img.title = entry.name;
             img.alt = entry.name;
-
-            var span = document.createElement('span');
-            span.textContent = entry.name;
-
-            var span2 = document.createElement('span');
-            span2.textContent = 'X';
-            span2.classList.add('close');
-            span2.addEventListener('click', onClose);
-
-            div.appendChild(span2);
-            div.appendChild(img);
-            div.appendChild(span);
-            div.addEventListener('click', onThumbnailClick);
-
-            frag.appendChild(div);
         });
-
-        footer.innerHTML = '';
-        footer.appendChild(frag);
-    });
-}
-
-function onChange(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    var entries = e.target.webkitEntries;
-
-    // Dragging and dropping into the file input works fine but onchange doesn't
-    // populate .webkitEntries when selecting from the file dialog
-    // (crbug.com/138987). Thus, we need to explicitly write out files.
-    if (!entries.length) {
-        var files = e.target.files;
-        var numWritten = 0;
-
-        [].forEach.call(files, function (f, i) {
-            if (f.type.match('^image/')) {
-                writeFile(f, cwd, function (e) {
-                    if (++numWritten) {
-                        setLoadingTxt({txt: DONE_MSG + ' writing ' + files.length + ' files.'});
-                        renderImages(cwd);
-                    }
-                });
-            } else {
-                setLoadingTxt({txt: NOT_IMG_MSG, error: true});
-            }
-        });
-        return;
-    }
-
-    [].forEach.call(entries, function (entry) {
-
-        if (entry.isDirectory) {
-            setLoadingTxt({
-                txt: 'Importing directory: ' + entry.name,
-                stayOpen: true
-            });
-        } else {
-            setLoadingTxt({
-                txt: 'Importing file: ' + entry.name,
-                stayOpen: true
-            });
-        }
-
-        // Copy entry over to the local filesystem.
-        entry.copyTo(cwd, null, function (copiedEntry) {
-            setLoadingTxt({txt: DONE_MSG});
-            renderImages(cwd);
-        }, onError);
-
     });
 }
 
@@ -262,15 +183,7 @@ function onDrop(e) {
 
         var entry = item.webkitGetAsEntry();
         if (entry.isDirectory) {
-            setLoadingTxt({
-                txt: 'Importing directory: ' + entry.name,
-                stayOpen: true
-            });
-
-            // Copy the dropped DirectoryEntry over to our local filesystem.
-            entry.copyTo(cwd, null, function (copiedEntry) {
-                renderImages(cwd);
-            }, onError);
+            /* it's a folder */
         } else {
             if (entry.isFile && files[i].type.match('^image/')) {
                 // Copy the dropped entry into local filesystem.
@@ -278,17 +191,21 @@ function onDrop(e) {
                     renderImages(cwd);
                 }, onError);
             } else {
-                setLoadingTxt({txt: NOT_IMG_MSG, error: true});
+                /* it's not an image */
             }
         }
     }
 }
 
-function init() {
-    $("#new-profile-pic").on("drop", function (e) {
-        onDrop(e);
+function initFileDragDrop() {
+    $(".lbl-new-profile-pic").on("drop", function (e) {
+        onDrop(e.originalEvent);
+    }).on("dragstart", function () {
+        e.preventDefault();
+        return false;
     }).on("dragover", function (e) {
         e.preventDefault();
+        return false;
     }).on("dragenter", function (e) {
         e.target.classList.add('active');
     }).on("dragleave", function () {
@@ -302,3 +219,7 @@ function init() {
         renderImages(cwd);
     }, onError);
 }
+
+$(function () {
+    initFileDragDrop();
+});

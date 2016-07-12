@@ -59,7 +59,12 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('dob', 'Date of birth') !!}
-                            {!! Form::text('dob', old('dob'), ['class' => 'form-control input-sm', 'placeholder' => 'dob']) !!}
+                            <div class="input-icon datetime-pick date-only">
+                                {!! Form::text('dob', old('dob'), ['class' => 'form-control input-sm', 'placeholder' => 'dob']) !!}
+                                <span class="add-on">
+                                    <i class="sa-plus icon-calendar"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group">
                             {!! Form::label('gender', 'Date of birth') !!} &nbsp;
@@ -111,10 +116,19 @@
 @stop
 @section('script')
     <script type="text/javascript" src="{{asset('assets/external/package/Cropper/cropper.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/external/sa/js/datetimepicker.min.js')}}"></script>
     <script type="text/javascript">
         var cropper = null;
         $(function () {
-
+            var $dateOnly = $(".date-only");
+            if($dateOnly.length > 0) {
+                $dateOnly.datetimepicker({
+                    pickTime: false
+                });
+                $('.datetime-pick input:text').on('click', function(){
+                    $(this).closest('.datetime-pick').find('.add-on i').click();
+                });
+            }
         });
 
         function previewSelectedImage(el) {
