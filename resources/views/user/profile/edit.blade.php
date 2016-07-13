@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('country', 'Country') !!} &nbsp;
-                            {!! Form::text('country', old('country'), ['class' => 'form-control input-sm', 'placeholder' => 'country']) !!}
+                            {!! Form::select('country', array(), old('country'), ['class' => 'form-control input-sm', 'id' => 'sel-country']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('state', 'State') !!} &nbsp;
@@ -117,19 +117,52 @@
 @section('script')
     <script type="text/javascript" src="{{asset('assets/external/package/Cropper/cropper.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/external/sa/js/datetimepicker.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/external/sa/js/chosen.min.js')}}"></script>
     <script type="text/javascript">
         var cropper = null;
         $(function () {
+            pageInit();
+        });
+
+        function pageInit() {
             var $dateOnly = $(".date-only");
-            if($dateOnly.length > 0) {
+            if ($dateOnly.length > 0) {
                 $dateOnly.datetimepicker({
                     pickTime: false
                 });
-                $('.datetime-pick input:text').on('click', function(){
+                $('.datetime-pick input:text').on('click', function () {
                     $(this).closest('.datetime-pick').find('.add-on i').click();
                 });
             }
-        });
+            getRESTCountries({
+                "url": "{{asset("assets/internal/json/countries.json")}}"
+            }, function (countries) {
+                console.info('countries', countries);
+                var $selCountry = $("#sel-country");
+                $.each(countries, function (index, country) {
+                    $selCountry.append(
+                            $("<option>").attr({
+                                "value": country.name
+                            }).text(country.name)
+                    );
+                });
+                $selCountry.select();
+//                $("#sel-country").autocomplete({
+//                    source: function (request, response) {
+//                        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+//                        response($.grep(countries, function (item) {
+//                            return matcher.test(item.name)
+//                        }))
+//                    },
+//                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+//                    return $(ul).addClass("dropdown-menu inner").append(
+//                            $("<li>").attr("data-value", item.name).append(
+//                                    $("<a>").attr("href", "#").text(item.name)
+//                            )
+//                    );
+//                };
+            });
+        }
 
         function previewSelectedImage(el) {
             if (getFileSizeFromInput(el) <= 0 || getFileSizeFromInput(el) > 950 * 1024) {
@@ -198,9 +231,7 @@
                 "type": "put",
                 "data": {
                     "_token": "{!! csrf_token() !!}",
-                    "user": {
-                        "profile_pic": data
-                    }
+                    "profile_pic": data
                 },
                 'cache': false,
                 'dataType': "json",
@@ -211,7 +242,7 @@
                     }
                 },
                 "error": function () {
-                    console.info("Upload error");
+                    alertP("Profile Picture Upload Failed", "Unable to upload profile picture, please try again later.");
                 }
             })
         }
@@ -221,9 +252,31 @@
             e.stopPropagation();
         }
 
-        function updateUserProfileOnClick()
-        {
+        function updateUserProfileOnClick() {
+            var params = $("#frm-update-user-profile").serialize();
+            submitUserProfile(params, function (response) {
+                if (response.status == true) {
+                    alertP("Profile Updated", "You profile information has been updated.");
+                }
+            });
+        }
 
+        function submitUserProfile(data, callback) {
+            $.ajax({
+                "url": "{{url("user/profile")}}",
+                "type": "put",
+                "data": data,
+                'cache': false,
+                'dataType': "json",
+                "success": function (response) {
+                    if ($.isFunction(callback)) {
+                        callback(response);
+                    }
+                },
+                "error": function () {
+                    alertP("Profile Update Failed", "Unable to update profile, please try again later.");
+                }
+            });
         }
     </script>
 @stop

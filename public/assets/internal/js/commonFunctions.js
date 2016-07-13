@@ -126,3 +126,11 @@ function getFileSizeFromInput(input) {
     }
     return 0;
 }
+
+function getRESTCountries(params, callback) {
+    $.getJSON(params.url, function (response) {
+        if (typeof callback == "function") {
+            callback(response);
+        }
+    });
+}

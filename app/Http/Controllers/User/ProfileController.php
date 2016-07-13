@@ -93,7 +93,7 @@ class ProfileController extends Controller
                 $userInfo->save();
             }
 
-            $user->info->fill($input['user']);
+            $user->info->fill($input);
             $user->info->save();
             $output = new \stdClass();
             $output->status = true;
