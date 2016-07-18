@@ -35,7 +35,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-8 col-sm-6">
                 <div class="tile">
                     <h2 class="tile-title">Personal Details</h2>
@@ -60,14 +59,14 @@
                         <div class="form-group">
                             {!! Form::label('dob', 'Date of birth') !!}
                             <div class="input-icon datetime-pick date-only">
-                                {!! Form::text('dob', old('dob'), ['class' => 'form-control input-sm', 'placeholder' => 'dob']) !!}
+                                {!! Form::text('dob', old('dob'), ['class' => 'form-control input-sm', 'placeholder' => 'dob', 'data-format' => "yyyy-MM-dd"]) !!}
                                 <span class="add-on">
                                     <i class="sa-plus icon-calendar"></i>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('gender', 'Date of birth') !!} &nbsp;
+                            {!! Form::label('gender', 'Gender') !!} &nbsp;
                             {!! Form::select('gender', array("male"=>"male","female"=>"female","other"=>"other"), old('gender'), ['class' => 'control-inline form-control input-sm']) !!}
                         </div>
                         <div class="form-group">
@@ -76,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('country', 'Country') !!} &nbsp;
-                            {!! Form::select('country', array(), old('country'), ['class' => 'form-control input-sm', 'id' => 'sel-country']) !!}
+                            {!! Form::select('country', $countries, old('country'), ['class' => 'form-control input-sm', 'id' => 'sel-country']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('state', 'State') !!} &nbsp;

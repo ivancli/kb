@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Mockery\CountValidator\Exception;
 
@@ -78,7 +79,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         return view('user.profile.edit')->with(array(
-            "user" => $user
+            "user" => $user,
+            "countries" => Config::get("constants.countries"),
         ));
     }
 
@@ -87,7 +89,7 @@ class ProfileController extends Controller
         try {
             $input = $request->all();
             $user = Auth::user();
-            if(is_null($user->info)){
+            if (is_null($user->info)) {
                 $userInfo = new UserInfo();
                 $userInfo->user_id = $user->id;
                 $userInfo->save();

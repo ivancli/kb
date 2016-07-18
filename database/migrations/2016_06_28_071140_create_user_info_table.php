@@ -18,7 +18,7 @@ class CreateUserInfoTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('title', array("mr", "mrs", "ms", "mx", "miss", "madam", "dr", "prof"))->nullable();
             $table->string('description')->nullable();
-            $table->timestamp("dob")->nullable();
+            $table->date("dob")->nullable();
             $table->enum('gender', array("male", "female", "other"))->nullable();
             $table->string('phone')->nullable();
             $table->string('suburb')->nullable();
