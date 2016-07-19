@@ -46,6 +46,14 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime
             ],
+            [
+                'id' => 5,
+                'name' => "view_chams",
+                'display_name' => "View CHAMS",
+                'description' => "Browse CHAMS pages",
+                'created_at' => new DateTime,
+                'updated_at' => new DateTime
+            ],
         ]);
     }
 }

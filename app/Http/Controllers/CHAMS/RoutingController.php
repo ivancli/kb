@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\CHAMS;
 
+use App\User;
 use Illuminate\Routing\Controller;
 
 /**
@@ -18,6 +19,34 @@ class RoutingController extends Controller
 
     public function users()
     {
-        return view('chams.users');
+        $users = User::chams();
+        return view('chams.users')->with(array(
+            "users" => $users
+        ));
+    }
+
+    public function businessUnits()
+    {
+        return view('chams.business_units');
+    }
+
+    public function assets()
+    {
+        return view('chams.assets');
+    }
+
+    public function events()
+    {
+        return view('chams.events');
+    }
+
+    public function bookings()
+    {
+        return view('chams.bookings');
+    }
+
+    public function reports()
+    {
+        return view('chams.reports');
     }
 }

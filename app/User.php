@@ -35,4 +35,11 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\UserPref');
     }
+
+    public static function chams()
+    {
+        return User::whereHas("roles", function($query){
+            $query->where("name", "like", "chams%");
+        })->get();
+    }
 }

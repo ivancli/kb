@@ -116,3 +116,7 @@ table th.shrink, table td.shrink {
 .lbl-new-profile-pic {
     cursor: pointer;
 }
+
+.tab-content-with-table {
+    padding: 0;
+}

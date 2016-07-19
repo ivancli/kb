@@ -68,6 +68,11 @@ Route::group([
 ], function () {
     Route::get('/', ['uses' => 'CHAMS\RoutingController@home']);
     Route::get('users', ['middleware' => ['auth', 'role:chams_admin'], 'uses' => 'CHAMS\RoutingController@users']);
+    Route::get('business_units', ['uses' => 'CHAMS\RoutingController@businessUnits']);
+    Route::get('assets', ['uses' => 'CHAMS\RoutingController@assets']);
+    Route::get('events', ['uses' => 'CHAMS\RoutingController@events']);
+    Route::get('bookings', ['uses' => 'CHAMS\RoutingController@bookings']);
+    Route::get('reports', ['uses' => 'CHAMS\RoutingController@reports']);
 });
 /**
  * @end CHAMS Routes
