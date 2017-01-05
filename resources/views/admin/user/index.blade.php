@@ -11,7 +11,7 @@
     ICL KB - User
 @stop
 @section('link')
-    <link rel="stylesheet" href="{{asset('assets/external/package/DataTables-1.10.12/media/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{elixir('css/DataTables-1.10.12.css')}}">
 @stop
 @section('content')
     <h4 class="page-title">Manage Users</h4>
@@ -31,7 +31,8 @@
                         <div class="media">
                             <div class="media-body">
                                 Show &nbsp;
-                                <select class="control-inline form-control input-sm m-b-5" id="sel-status" onchange="drawUserTable();">
+                                <select class="control-inline form-control input-sm m-b-5" id="sel-status"
+                                        onchange="drawUserTable();">
                                     <option value="">all</option>
                                     <option value="active">active</option>
                                     <option value="inactive">inactive</option>
@@ -39,7 +40,8 @@
                                     <option value="deleted">deleted</option>
                                 </select>
                                 &nbsp;
-                                <select class="control-inline form-control input-sm m-b-5" id="sel-role" onchange="drawUserTable()">
+                                <select class="control-inline form-control input-sm m-b-5" id="sel-role"
+                                        onchange="drawUserTable()">
                                     <option value="">ICL KB Users</option>
                                     @foreach($roles as $role)
                                         <option value="{{$role->id}}">{{$role->display_name}}</option>
@@ -50,15 +52,15 @@
                     </div>
                     <table id="tbl-user" class="tile table table-bordered table-striped">
                         <thead>
-                            <tr>
-                                <th class="shrink">ID</th>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Roles</th>
-                                <th class="shrink">Status</th>
-                                <th>Registered at</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th class="shrink">ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Roles</th>
+                            <th class="shrink">Status</th>
+                            <th>Registered at</th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -70,8 +72,7 @@
 
 @stop
 @section('script')
-    <script type="text/javascript" src="{{asset('assets/external/package/DataTables-1.10.12/media/js/jquery.dataTables.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/external/package/DataTables-1.10.12/media/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{elixir('js/DataTables-1.10.12.js')}}" type="text/javascript"></script>
     <script>
         var userTable = null;
         $(function () {

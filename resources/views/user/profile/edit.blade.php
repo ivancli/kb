@@ -12,7 +12,7 @@
     ICL KB - Edit Profile
 @stop
 @section('link')
-    <link rel="stylesheet" href="{{asset('assets/external/package/Cropper/cropper.min.css')}}">
+    <link rel="stylesheet" href="{{elixir('css/Cropper.css')}}">
 @stop
 @section('content')
     <h4 class="page-title">Edit Profile</h4>
@@ -114,9 +114,8 @@
     {{--/Cropper Popup Template--}}
 @stop
 @section('script')
-    <script type="text/javascript" src="{{asset('assets/external/package/Cropper/cropper.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/external/sa/js/datetimepicker.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/external/sa/js/chosen.min.js')}}"></script>
+    <script src="{{elixir('js/Cropper.js')}}" type="text/javascript"></script>
+    <script src="{{elixir('js/profile.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         var cropper = null;
         $(function () {

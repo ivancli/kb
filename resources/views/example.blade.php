@@ -21,7 +21,7 @@
 <!-- Shortcuts -->
 <div class="block-area shortcut-area">
     <a class="shortcut tile" href="#">
-        <img src="img/shortcuts/money.png" alt="">
+        <img src="{{asset('build/img/shortcuts/money.png')}}" alt="">
         <small class="t-overflow">Purchases</small>
     </a>
 </div>

@@ -1,0 +1,123 @@
+.sa-top-login {
+    background-image: url(../img/icon/login.png);
+}
+
+.neat-nav-icon {
+    font-size: 25px;
+    float: left;
+    padding: 12px 5px;
+}
+
+.neat-nav-search {
+    font-size: 25px;
+    padding: 4px 5px;
+}
+
+.main-search {
+    background-image: none;
+    padding-left: 0;
+    width: 85%;
+}
+
+.login-paragraph {
+    margin-top: 10px;
+}
+
+.error-msgs {
+    display: none;
+}
+
+.error-msgs li {
+    color: #FFABAB;
+}
+
+.table > thead > tr > th {
+    font-weight: bold;
+}
+
+#tbl-user {
+    margin-bottom: 0;
+}
+
+/*fa icons in image format*/
+.sa-side-fa-home {
+    background-image: url(../img/icon/fa-home.png);
+}
+
+.sa-side-fa-user {
+    background-image: url(../img/icon/fa-user.png);
+}
+
+.sa-side-fa-ticket {
+    background-image: url(../img/icon/fa-ticket.png);
+}
+
+/* For Higher DPI */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.25), only screen and (min--moz-device-pixel-ratio: 1.25), only screen and (     -o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.25), only screen and (min-resolution: 120dpi), only screen and (min-resolution: 1.25dppx) {
+    .sa-side-fa-home {
+        background-image: url(../img/icon/fa-home%402x.png);
+        background-size: 25px 25px;
+    }
+
+    .sa-side-fa-user {
+        background-image: url(../img/icon/fa-user%402x.png);
+        background-size: 25px 25px;
+    }
+
+    .sa-side-fa-ticket {
+        background-image: url(../img/icon/fa-ticket%402x.png);
+        background-size: 25px 25px;
+    }
+}
+
+.control-inline {
+    width: auto;
+    display: inline-block;
+}
+
+select.control-inline {
+    padding-right: 30px;
+}
+
+table th.shrink, table td.shrink {
+    width: 1%;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.cover .profile-pic {
+    background-color: #dddddd;
+}
+
+.role-tag {
+    color: #a77606;
+}
+
+.current-profile-pic {
+    max-width: 100%;
+    min-width: 150px;
+}
+
+#preview-profile-pic {
+    max-width: 100%;
+    min-width: 150px;
+}
+
+.modal-template {
+    display: none;
+}
+
+#new-profile-pic {
+    display: none;
+}
+
+.lbl-new-profile-pic {
+    cursor: pointer;
+}
+
+.tab-content-with-table {
+    padding: 0;
+}
+/*# sourceMappingURL=app.css.map */

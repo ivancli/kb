@@ -27,7 +27,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="tile-light p-10 m-b-15">
                     <div class="cover p-relative">
-                        <img alt="" class="w-100" src="{{asset('assets/internal/img/default-profile-cover.jpg')}}">
+                        <img alt="" class="w-100" src="{{asset('build/img/default-profile-cover.jpg')}}">
                         <img alt="" src="{{url('media/profile/' . rawurlencode($user->name) . '/' . $user->id)}}" class="profile-pic">
 
                         <div class="profile-btn">

@@ -16,16 +16,9 @@
     <title>@yield('title')</title>
 
     <!-- CSS -->
-    <link href="{{asset('assets/external/sa/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/animate.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/form.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/calendar.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/style.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/icons.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/generics.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{elixir('css/sa.css')}}">
     @yield('link')
-    <link href="{{asset('assets/internal/css/app.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{elixir('css/app.css')}}">
 </head>
 <body id="skin-cloth">
 
@@ -180,7 +173,7 @@
                 <div class="overflow" style="height: 254px">
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/1.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/1.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Nadin Jackson - 2 Hours ago</small>
@@ -191,7 +184,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/2.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/2.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">David Villa - 5 Hours ago</small>
@@ -202,7 +195,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/3.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/3.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Harris worgon - On 15/12/2013</small>
@@ -214,7 +207,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/4.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/4.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Mitch Bradberry - On 14/12/2013</small>
@@ -226,7 +219,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/1.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/1.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Nadin Jackson - On 15/12/2013</small>
@@ -237,7 +230,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/2.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/2.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">David Villa - On 16/12/2013</small>
@@ -248,7 +241,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/3.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/3.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Harris worgon - On 17/12/2013</small>
@@ -260,7 +253,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/4.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/4.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Mitch Bradberry - On 18/12/2013</small>
@@ -272,7 +265,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/5.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/5.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Wendy Mitchell - On 19/12/2013</small>
@@ -302,7 +295,7 @@
                 <div class="overflow" style="height: 254px">
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/1.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/1.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Nadin Jackson - 2 Hours ago</small>
@@ -313,7 +306,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/2.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/2.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">David Villa - 5 Hours ago</small>
@@ -324,7 +317,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/3.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/3.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Harris worgon - On 15/12/2013</small>
@@ -336,7 +329,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/4.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/4.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Mitch Bradberry - On 14/12/2013</small>
@@ -348,7 +341,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/1.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/1.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">Nadin Jackson - On 15/12/2013</small>
@@ -359,7 +352,7 @@
                     </div>
                     <div class="media">
                         <div class="pull-left">
-                            <img width="40" src="img/profile-pics/2.jpg" alt="">
+                            <img width="40" src="{{asset('build/img/profile-pics/2.jpg')}}" alt="">
                         </div>
                         <div class="media-body">
                             <small class="text-muted">David Villa - On 16/12/2013</small>
@@ -390,35 +383,35 @@
         <ul class="browsers">
             <li>
                 <a href="https://www.google.com/intl/en/chrome/browser/">
-                    <img src="img/browsers/chrome.png" alt="">
+                    <img src="{{asset('build/img/browsers/chrome.png')}}" alt="">
 
                     <div>Google Chrome</div>
                 </a>
             </li>
             <li>
                 <a href="http://www.mozilla.org/en-US/firefox/new/">
-                    <img src="img/browsers/firefox.png" alt="">
+                    <img src="{{asset('build/img/browsers/firefox.png')}}" alt="">
 
                     <div>Mozilla Firefox</div>
                 </a>
             </li>
             <li>
                 <a href="http://www.opera.com/computer/windows">
-                    <img src="img/browsers/opera.png" alt="">
+                    <img src="{{asset('build/img/browsers/opera.png')}}" alt="">
 
                     <div>Opera</div>
                 </a>
             </li>
             <li>
                 <a href="http://safari.en.softonic.com/">
-                    <img src="img/browsers/safari.png" alt="">
+                    <img src="{{asset('build/img/browsers/safari.png')}}" alt="">
 
                     <div>Safari</div>
                 </a>
             </li>
             <li>
                 <a href="http://windows.microsoft.com/en-us/internet-explorer/downloads/ie-10/worldwide-languages">
-                    <img src="img/browsers/ie.png" alt="">
+                    <img src="{{asset('build/img/browsers/ie.png')}}" alt="">
 
                     <div>Internet Explorer(New)</div>
                 </a>
@@ -429,46 +422,10 @@
     <![endif]-->
 </section>
 
-<!-- Javascript Libraries -->
-<!-- jQuery -->
-<script src="{{asset('assets/external/sa/js/jquery.min.js')}}"></script> <!-- jQuery Library -->
-<script src="{{asset('assets/external/sa/js/jquery-ui.min.js')}}"></script> <!-- jQuery UI -->
-<script src="{{asset('assets/external/sa/js/jquery.easing.1.3.js')}}"></script>
-<!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+<script src="{{elixir('js/sa.js')}}" type="text/javascript"></script>
 
-<!-- Bootstrap -->
-<script src="{{asset('assets/external/sa/js/bootstrap.min.js')}}"></script>
+<script src="{{elixir('js/commonFunctions.js')}}" type="text/javascript"></script>
 
-<!-- Charts -->
-<script src="{{asset('assets/external/sa/js/charts/jquery.flot.js')}}"></script> <!-- Flot Main -->
-<script src="{{asset('assets/external/sa/js/charts/jquery.flot.time.js')}}"></script> <!-- Flot sub -->
-<script src="{{asset('assets/external/sa/js/charts/jquery.flot.animator.min.js')}}"></script> <!-- Flot sub -->
-<script src="{{asset('assets/external/sa/js/charts/jquery.flot.resize.min.js')}}"></script>
-<!-- Flot sub - for repaint when resizing the screen -->
-
-<script src="{{asset('assets/external/sa/js/sparkline.min.js')}}"></script> <!-- Sparkline - Tiny charts -->
-<script src="{{asset('assets/external/sa/js/easypiechart.js')}}"></script> <!-- EasyPieChart - Animated Pie Charts -->
-<script src="{{asset('assets/external/sa/js/charts.js')}}"></script> <!-- All the above chart related functions -->
-
-<!-- Map -->
-<script src="{{asset('assets/external/sa/js/maps/jvectormap.min.js')}}"></script> <!-- jVectorMap main library -->
-<script src="{{asset('assets/external/sa/js/maps/usa.js')}}"></script> <!-- USA Map for jVectorMap -->
-
-<!--  Form Related -->
-<script src="{{asset('assets/external/sa/js/icheck.js')}}"></script> <!-- Custom Checkbox + Radio -->
-
-<!-- UX -->
-<script src="{{asset('assets/external/sa/js/scroll.min.js')}}"></script> <!-- Custom Scrollbar -->
-
-<!-- Other -->
-<script src="{{asset('assets/external/sa/js/calendar.min.js')}}"></script> <!-- Calendar -->
-<script src="{{asset('assets/external/sa/js/feeds.min.js')}}"></script> <!-- News Feeds -->
-
-
-<!-- All JS functions -->
-<script src="{{asset('assets/external/sa/js/functions.js')}}"></script>
-
-<script src="{{asset('assets/internal/js/commonFunctions.js')}}"></script>
 @yield('script')
 </body>
 

@@ -14,9 +14,7 @@
     <title>ICL KB - Page Not Found</title>
 
     <!-- CSS -->
-    <link href="{{asset('assets/external/sa/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/style.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/generics.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{elixir('css/error.css')}}">
 </head>
 <body id="skin-cloth">
     <section id="error-page" class="tile">

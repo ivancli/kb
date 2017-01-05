@@ -11,7 +11,7 @@
     ICL KB - CHAMS
 @stop
 @section('link')
-    <link rel="stylesheet" href="{{asset('assets/external/package/DataTables-1.10.12/media/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{elixir('css/DataTables-1.10.12.css')}}">
 @stop
 @section('content')
     <ol class="breadcrumb hidden-xs">
@@ -77,8 +77,7 @@
 @stop
 
 @section('script')
-    <script type="text/javascript" src="{{asset('assets/external/package/DataTables-1.10.12/media/js/jquery.dataTables.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/external/package/DataTables-1.10.12/media/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{elixir('js/DataTables-1.10.12.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         var userTable = null;
         $(function () {

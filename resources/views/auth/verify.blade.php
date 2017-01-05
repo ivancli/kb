@@ -15,12 +15,8 @@
     <title>ICL Knowledge Base - Verify Account</title>
 
     <!-- CSS -->
-    <link href="{{asset('assets/external/sa/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/form.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/style.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/animate.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/external/sa/css/generics.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/internal/css/app.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{elixir('css/login.css')}}">
+    <link rel="stylesheet" href="{{elixir('css/app.css')}}">
 </head>
 <body id="skin-cloth">
     <section id="login">
@@ -42,15 +38,8 @@
         </form>
     </section>
 
-    <!-- Javascript Libraries -->
-    <!-- jQuery -->
-    <script src="{{asset('assets/external/sa/js/jquery.min.js')}}"></script> <!-- jQuery Library -->
+    <script src="{{elixir('js/login.js')}}" type="text/javascript"></script>
 
-    <!-- Bootstrap -->
-    <script src="{{asset('assets/external/sa/js/bootstrap.min.js')}}"></script>
-
-    <!-- All JS functions -->
-    <script src="{{asset('assets/external/sa/js/functions.js')}}"></script>
     <script type="text/javascript">
         setTimeout(function () {
             window.location.href = "{{url('/')}}";
