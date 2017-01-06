@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

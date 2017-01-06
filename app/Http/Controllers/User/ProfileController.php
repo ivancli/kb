@@ -3,8 +3,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 
-use App\User;
-use App\UserInfo;
+use App\Models\User\User;
+use App\Models\User\UserInfo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

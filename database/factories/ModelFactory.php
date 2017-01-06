@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
@@ -22,7 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\UserInfo::class, function (Faker\Generator $faker){
+$factory->define(App\Models\User\UserInfo::class, function (Faker\Generator $faker){
     return [
         'user_id' => 2,
         'profile_pic' => base64_encode(file_get_contents($faker->image())),

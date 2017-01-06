@@ -11,11 +11,6 @@ class RandomUsersSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class)->create();
-        factory(App\User::class)->create();
-        factory(App\User::class)->create();
-        factory(App\User::class)->create();
-        factory(App\User::class)->create();
-        factory(App\User::class)->create();
+        factory(App\Models\User\User::class, 5)->create();
     }
 }

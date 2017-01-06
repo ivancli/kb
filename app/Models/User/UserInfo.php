@@ -6,7 +6,7 @@
  * Time: 9:04 PM
  */
 
-namespace App;
+namespace App\Models\User;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +29,6 @@ class UserInfo extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User\User');
     }
 }

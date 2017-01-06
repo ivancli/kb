@@ -10,7 +10,7 @@ namespace App\Http\Controllers\CHAMS;
 
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

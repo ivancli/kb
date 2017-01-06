@@ -6,7 +6,7 @@
  * Time: 10:33 PM
  */
 
-namespace App;
+namespace App\Models\User;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +20,6 @@ class UserPref extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User\User');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\CHAMS;
 
-use App\User;
+use App\Models\User\User;
 use Illuminate\Routing\Controller;
 
 /**

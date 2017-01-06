@@ -9,6 +9,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Friend\Friend;
+use App\Models\User\User;
+
 class RoutingController extends Controller
 {
     function home()

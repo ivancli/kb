@@ -17,6 +17,6 @@ class RandomUserInfoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\UserInfo::class)->create();
+        factory(App\Models\User\UserInfo::class)->create();
     }
 }
